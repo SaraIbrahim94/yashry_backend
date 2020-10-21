@@ -14,10 +14,16 @@ include 'database.php';
                 die;
                 //header("location:api.php");
             }
-          //  print_r($input);
-            $sql="INSERT INTO products (name) VALUES('$input[name]')";
-            $r = $conn->query($sql);
             try{
+           
+                if (!array_key_exists("name",$input))
+                throw new Exception("<span style='color:black; font-size:2rem'>Note:</span><p> please enter all input fields, name as follow:</p><li>name=pijama <p>Full example: http://localhost/yashry_backend/api/add_product.php?name=pjama</p></li>");
+                else if($input['name']=='')
+                throw new Exception("<span style='color:black; font-size:2rem'>Note:</span> <p><strong> Please make sure all input has values </strong></p><p> please enter all input fields, name as follow:</p><li>name=pijama <p>Full example: http://localhost/yashry_backend/api/add_product.php?name=pjama</p></li>");
+
+                $sql="INSERT INTO products (name) VALUES('$input[name]')";
+                $r = $conn->query($sql);
+                
                 if(!$r)
                 throw new Exception("<p style='color:red'>Error:</p>".$conn->error);
     
